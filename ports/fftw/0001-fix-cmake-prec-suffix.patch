@@ -1,0 +1,59 @@
+From 77748a0e18e55968ea9ada2fdf6c2e2e4989200e Mon Sep 17 00:00:00 2001
+From: "zhangkun(company)" <nkzhangkun@qq.com>
+Date: Fri, 19 Apr 2019 13:35:11 +0800
+Subject: [PATCH] fix-cmake-prec-suffix
+
+---
+ CMakeLists.txt       | 8 ++++----
+ FFTW3Config.cmake.in | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 335808a..b5e3986 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -59,7 +59,7 @@ if (HAVE_TIME_H AND HAVE_SYS_TIME_H)
+   set (TIME_WITH_SYS_TIME TRUE)
+ endif ()
+ 
+-include (CheckPrototypeDefinition) 
++include (CheckPrototypeDefinition)
+ check_prototype_definition (drand48 "double drand48 (void)" "0" stdlib.h HAVE_DECL_DRAND48)
+ check_prototype_definition (srand48 "void srand48(long int seedval)" "0" stdlib.h HAVE_DECL_SRAND48)
+ check_prototype_definition (cosl "long double cosl( long double arg )" "0" math.h HAVE_DECL_COSL)
+@@ -358,7 +358,7 @@ foreach(subtarget ${subtargets})
+           ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+ endforeach ()
+ install(TARGETS ${fftw3_lib}
+-          EXPORT FFTW3LibraryDepends
++          EXPORT FFTW3${PREC_SUFFIX}LibraryDepends
+           RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+           LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+           ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+@@ -422,8 +422,8 @@ install (FILES
+ 	  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/fftw3${PREC_SUFFIX}
+          COMPONENT Development)
+ 
+-export (TARGETS ${fftw3_lib} NAMESPACE FFTW3:: FILE ${PROJECT_BINARY_DIR}/FFTW3LibraryDepends.cmake)
+-install(EXPORT FFTW3LibraryDepends
++export (TARGETS ${fftw3_lib} NAMESPACE FFTW3:: FILE ${PROJECT_BINARY_DIR}/FFTW3${PREC_SUFFIX}LibraryDepends.cmake)
++install(EXPORT FFTW3${PREC_SUFFIX}LibraryDepends
+         NAMESPACE FFTW3::
+         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/fftw3${PREC_SUFFIX}
+         COMPONENT Development)
+diff --git a/FFTW3Config.cmake.in b/FFTW3Config.cmake.in
+index 6b1fbc2..ccd8efe 100644
+--- a/FFTW3Config.cmake.in
++++ b/FFTW3Config.cmake.in
+@@ -10,7 +10,7 @@ set (FFTW3@PREC_SUFFIX@_LIBRARIES fftw3@PREC_SUFFIX@)
+ set (FFTW3@PREC_SUFFIX@_LIBRARY_DIRS @CMAKE_INSTALL_FULL_LIBDIR@)
+ set (FFTW3@PREC_SUFFIX@_INCLUDE_DIRS @CMAKE_INSTALL_FULL_INCLUDEDIR@)
+ 
+-include ("${CMAKE_CURRENT_LIST_DIR}/FFTW3LibraryDepends.cmake")
++include ("${CMAKE_CURRENT_LIST_DIR}/FFTW3@PREC_SUFFIX@LibraryDepends.cmake")
+ 
+ if (CMAKE_VERSION VERSION_LESS 2.8.3)
+   set (CMAKE_CURRENT_LIST_DIR)
+-- 
+2.20.1.windows.1
+
