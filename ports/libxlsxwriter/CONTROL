@@ -1,4 +1,10 @@
 Source: libxlsxwriter
+<<<<<<< HEAD
 Version: 0.8.6-0
 Build-Depends: zlib
 Description: A C library for creating Excel XLSX files.
+=======
+Version: 0.8.7-1
+Description: Libxlsxwriter is a C library that can be used to write text, numbers, formulas and hyperlinks to multiple worksheets in an Excel 2007+ XLSX file.
+Build-Depends: zlib
+>>>>>>> upstream/master
